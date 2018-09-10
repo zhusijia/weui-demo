@@ -9,29 +9,31 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import registerServiceWorker from './registerServiceWorker';
 
 import { createStore } from 'redux';
+import { Provider } from 'react-redux'
 import todoApp from './store/reducers';
 import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from './store/action'
+import List from './components/list';
 
-let store = createStore(todoApp);
+const store = createStore(todoApp);
 
 // 每次 state 更新时，打印日志
 // 注意 subscribe() 返回一个函数用来注销监听器
-const unsubscribe = store.subscribe(() => {
-  console.log(store.getState())
-})
+// const unsubscribe = store.subscribe(() => {
+//   console.log(store.getState())
+// })
 
-store.dispatch(addTodo('Learn about actions'));
-store.dispatch(addTodo('Learn about reducer'));
-store.dispatch(addTodo('Learn about state'));
+// store.dispatch(addTodo('Learn about actions'));
+// store.dispatch(addTodo('Learn about reducer'));
+// store.dispatch(addTodo('Learn about state'));
 
-store.dispatch(toggleTodo(0));
-store.dispatch(toggleTodo(1));
+// store.dispatch(toggleTodo(0));
+// store.dispatch(toggleTodo(1));
 
-store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
+// store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
 
 
 // 停止监听state更新
-unsubscribe();
+// unsubscribe();
 
 class BasicExample extends React.Component {
   render() {
@@ -63,9 +65,9 @@ class BasicExample extends React.Component {
 
 const About = ()=> {
   return (
-    <div>
-      About
-    </div>
+    <Provider store={store}>
+      <List />
+    </Provider>
   )
 }
 
